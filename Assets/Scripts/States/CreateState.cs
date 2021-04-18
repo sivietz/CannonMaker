@@ -6,7 +6,6 @@ public class CreateState : BaseState
         stateController.UIPanels.CreateView.OnPreviousButtonClicked += SetPreviousCannonPart;
         stateController.UIPanels.CreateView.OnSaveButtonClicked += SaveClicked;
         stateController.UIPanels.CreateView.SubscribeToViewActions();
-        CannonController.Instance.GenerateRandomCannon();
         stateController.UIPanels.CreateView.DisplayView(true);
     }
 
