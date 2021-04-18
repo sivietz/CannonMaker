@@ -86,7 +86,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7514823930996530457}
   - component: {fileID: 7909739413281166746}
-  - component: {fileID: 4440983597790624550}
   m_Layer: 5
   m_Name: Grid
   m_TagString: Untagged
@@ -137,18 +136,3 @@ MonoBehaviour:
   m_Spacing: {x: 5, y: 5}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!114 &4440983597790624550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5669466601517928419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efd8188a025d0c84fbc8c75aef9e6a47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridItem: {fileID: 8056026382681487316, guid: 1146b9dceb2b1a94fb822ec8a7598dad, type: 3}
-  content: {fileID: 7514823930996530457}
-  gridLayoutGroup: {fileID: 7909739413281166746}

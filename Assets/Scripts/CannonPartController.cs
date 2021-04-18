@@ -30,6 +30,32 @@ public class CannonPartController : MonoBehaviour, ISaveable
         }
     }
 
+    public void SetNextCannonPart()
+    {
+        if (currentPartId < cannonParts.Count - 1)
+        {
+            currentPartId++;
+        }
+        else
+        {
+            currentPartId = 0;
+        }
+        SetCannonPart(currentPartId);
+    }
+
+    public void SetPreviousCannonPart()
+    {
+        if (currentPartId > 0)
+        {
+            currentPartId--;
+        }
+        else
+        {
+            currentPartId = cannonParts.Count - 1;
+        }
+        SetCannonPart(currentPartId);
+    }
+
     public void SetCannonPart(int id)
     {
         foreach (var part in cannonParts)

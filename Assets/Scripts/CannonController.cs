@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class CannonController : MonoBehaviour, ISaveable
 {
-    public static Action OnCannonPartChanged;
-
     [SerializeField]
     private CannonPartController barrelController;
     [SerializeField]
@@ -14,21 +12,23 @@ public class CannonController : MonoBehaviour, ISaveable
     [SerializeField]
     private CannonPartController wheelsController;
 
-    private void Start()
+    private static CannonController instance;
+
+    public static CannonController Instance { get { return instance; } }
+
+    private void Awake()
     {
-        OnCannonPartChanged += AlignCannonParts;
-        //SaveView.OnSave += SaveCurrentCannon;
-        GenerateRandomCannon();
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
     }
 
-
-    private void OnDestroy()
-    {
-        OnCannonPartChanged -= AlignCannonParts;
-        //SaveView.OnSave -= SaveCurrentCannon;
-    }
-
-    private void AlignCannonParts()
+    public void AlignCannonParts()
     {
         StandAnchors standAnchors = standController.CurrentPartTransform.GetComponent<StandAnchors>();
         Vector3 distanceFromStandToWheels = wheelsController.CurrentPartTransform.position - standAnchors.WheelAnchor.position;
@@ -36,12 +36,11 @@ public class CannonController : MonoBehaviour, ISaveable
         barrelController.CurrentPartTransform.position = standAnchors.BarrelAnchor.position;
     }
 
-    private void GenerateRandomCannon()
+    public void GenerateRandomCannon()
     {
         barrelController.SetCannonPart(UnityEngine.Random.Range(0, barrelController.CannonParts.Count));
         standController.SetCannonPart(UnityEngine.Random.Range(0, standController.CannonParts.Count));
         wheelsController.SetCannonPart(UnityEngine.Random.Range(0, standController.CannonParts.Count));
-
         AlignCannonParts();
     }
 
@@ -59,6 +58,38 @@ public class CannonController : MonoBehaviour, ISaveable
         wheelsController.LoadData(save);
         AlignCannonParts();
     }
+
+    public void SetNextCannonPart(CannonPartType cannonPartType)
+    {
+        switch (cannonPartType)
+        {
+            case CannonPartType.Barrel:
+                barrelController.SetNextCannonPart();
+                break;
+            case CannonPartType.Stand:
+                standController.SetNextCannonPart();
+                break;
+            case CannonPartType.Wheels:
+                wheelsController.SetNextCannonPart();
+                break;
+        }
+        AlignCannonParts();
+    }
+
+    public void SetPreviousCannonPart(CannonPartType cannonPartType)
+    {
+        switch (cannonPartType)
+        {
+            case CannonPartType.Barrel:
+                barrelController.SetPreviousCannonPart();
+                break;
+            case CannonPartType.Stand:
+                standController.SetNextCannonPart();
+                break;
+            case CannonPartType.Wheels:
+                wheelsController.SetNextCannonPart();
+                break;
+        }
+        AlignCannonParts();
+    }
 }
-
-

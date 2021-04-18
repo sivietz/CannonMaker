@@ -22,8 +22,6 @@ public class SaveController : MonoBehaviour
     private static SaveController instance;
 
     public SaveDataCollection SaveDataCollection { get; private set; }
-    
-
     public static SaveController Instance { get { return instance; } }
 
     private void Awake()
@@ -36,35 +34,18 @@ public class SaveController : MonoBehaviour
         {
             instance = this;
         }
-    }
 
-    private void Start()
-    {
         jsonPath = Path.Combine(Application.persistentDataPath, JsonFileName);
-        if (File.Exists(jsonPath))
-        {
-            SaveDataCollection = LoadFromJSON();
-            if(SaveDataCollection != null)
-            {
-                OnJsonDataLoaded.Invoke();
-            }
-            else
-            {
-                SaveDataCollection = new SaveDataCollection();
-            }
-        }
-        else
-        {
-            SaveDataCollection = new SaveDataCollection();
-            File.Create(jsonPath);
-        }
-        
-        endOfFrame = new WaitForEndOfFrame();
 
         if (!Directory.Exists(Path.Combine(Application.persistentDataPath, ScreenshotFolderName)))
         {
             Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, ScreenshotFolderName));
         }
+    }
+
+    private void Start()
+    {
+        endOfFrame = new WaitForEndOfFrame();
     }
 
     public void SaveToJSON()
@@ -73,14 +54,22 @@ public class SaveController : MonoBehaviour
         PrepareDataToSave();
         string json = JsonUtility.ToJson(SaveDataCollection);
         File.WriteAllText(jsonPath, json);
+
         Debug.Log("save to: " + jsonPath);
         Debug.Log(json);
     }
 
-    public SaveDataCollection LoadFromJSON()
+    public void LoadFromJSON()
     {
-        string json = File.ReadAllText(jsonPath);
-        return JsonUtility.FromJson<SaveDataCollection>(json);
+        if (File.Exists(jsonPath))
+        {
+            string json = File.ReadAllText(jsonPath);
+            SaveDataCollection = JsonUtility.FromJson<SaveDataCollection>(json);
+        }
+        else
+        {
+            SaveDataCollection = new SaveDataCollection();
+        }
     }
 
     public void LoadSingleSaveData(int id)

@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SaveGridButton : MonoBehaviour
+public class SaveFileButton : MonoBehaviour
 {
     [SerializeField]
     private Image buttonImage;
+
+    public Action<int> OnButtonClicked;
 
     public int ButtonId { get; set; }
 
@@ -18,6 +21,6 @@ public class SaveGridButton : MonoBehaviour
 
     public void OnButtonClick()
     {
-        SaveController.Instance.LoadSingleSaveData(ButtonId);
+        OnButtonClicked?.Invoke(ButtonId);
     }
 }
