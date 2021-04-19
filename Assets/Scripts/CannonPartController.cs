@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -71,9 +70,9 @@ public class CannonPartController : MonoBehaviour, ISaveable
     {
         foreach (var part in save.cannonParts)
         {
-            if (part.cannonPartType == CannonPartType)
+            if (part.CannonPartType == CannonPartType)
             {
-                SetCannonPart(part.cannonPartId);
+                SetCannonPart(part.CannonPartId);
                 break;
             }
         }

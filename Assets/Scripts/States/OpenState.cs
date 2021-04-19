@@ -1,21 +1,23 @@
 public class OpenState : BaseState
 {
+    private OpenView openView;
     public override void EnterState()
     {
-        stateController.UIPanels.OpenView.OnSaveFileChosen += LoadChosenSaveFile;
+        openView = stateController.AppViews.OpenView;
+        openView.OnSaveChosen += LoadChosenSaveFile;
         foreach(var saveFile in SaveController.Instance.SaveDataCollection.saveDataList)
         {
-            stateController.UIPanels.OpenView.CreateGridButton(saveFile.id);
+            openView.CreateGridButton(saveFile.id);
         }
-        stateController.UIPanels.OpenView.SubscribeButtonActions();
-        stateController.UIPanels.OpenView.DisplayView(true);
+        openView.SubscribeButtonActions();
+        openView.DisplayView(true);
     }
 
     public override void ExitState()
     {
-        stateController.UIPanels.OpenView.DisplayView(false);
-        stateController.UIPanels.OpenView.OnSaveFileChosen -= LoadChosenSaveFile;
-        stateController.UIPanels.OpenView.UnsubscribeButtonActions();
+        openView.DisplayView(false);
+        openView.OnSaveChosen -= LoadChosenSaveFile;
+        openView.UnsubscribeButtonActions();
     }
 
     private void LoadChosenSaveFile(int saveId)

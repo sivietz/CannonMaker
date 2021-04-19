@@ -1,23 +1,25 @@
 public class CreateState : BaseState
 {
+    private CreateView createView;
     public override void EnterState()
     {
-        stateController.UIPanels.CreateView.OnNextButtonClicked += SetNextCannonPart;
-        stateController.UIPanels.CreateView.OnPreviousButtonClicked += SetPreviousCannonPart;
-        stateController.UIPanels.CreateView.OnSaveButtonClicked += SaveClicked;
-        stateController.UIPanels.CreateView.OnMenuButtonClicked += MenuClicked;
-        stateController.UIPanels.CreateView.SubscribeToViewActions();
-        stateController.UIPanels.CreateView.DisplayView(true);
+        createView = stateController.AppViews.CreateView;
+        createView.OnNextButton += SetNextCannonPart;
+        createView.OnPreviousButton += SetPreviousCannonPart;
+        createView.OnSaveButton += SaveButtonClicked;
+        createView.OnMenuButton += MenuButtonClicked;
+        createView.SubscribeToViewActions();
+        createView.DisplayView(true);
     }
 
     public override void ExitState()
     {
-        stateController.UIPanels.CreateView.DisplayView(false);
-        stateController.UIPanels.CreateView.OnNextButtonClicked -= SetNextCannonPart;
-        stateController.UIPanels.CreateView.OnPreviousButtonClicked -= SetPreviousCannonPart;
-        stateController.UIPanels.CreateView.OnSaveButtonClicked -= SaveClicked;
-        stateController.UIPanels.CreateView.OnMenuButtonClicked -= MenuClicked;
-        stateController.UIPanels.CreateView.UnsubscribeToViewActions();
+        createView.DisplayView(false);
+        createView.OnNextButton -= SetNextCannonPart;
+        createView.OnPreviousButton -= SetPreviousCannonPart;
+        createView.OnSaveButton -= SaveButtonClicked;
+        createView.OnMenuButton -= MenuButtonClicked;
+        createView.UnsubscribeToViewActions();
     }
 
     private void SetNextCannonPart(CannonPartType cannonPartType)
@@ -30,13 +32,13 @@ public class CreateState : BaseState
         CannonController.Instance.SetPreviousCannonPart(cannonPartType);
     }
 
-    private void SaveClicked()
+    private void SaveButtonClicked()
     {
         SaveController.Instance.SaveToJSON();
         SaveController.Instance.SaveScreenshot();
     }
 
-    private void MenuClicked()
+    private void MenuButtonClicked()
     {
         stateController.TransitionToState(new MenuState());
     }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,17 +7,17 @@ public class CreateView : BaseView
     [SerializeField]
     private List<CannonPartView> cannonPartViews;
 
-    public Action<CannonPartType> OnPreviousButtonClicked;
-    public Action<CannonPartType> OnNextButtonClicked;
-    public Action OnSaveButtonClicked;
-    public Action OnMenuButtonClicked;
+    public Action<CannonPartType> OnPreviousButton;
+    public Action<CannonPartType> OnNextButton;
+    public Action OnSaveButton;
+    public Action OnMenuButton;
 
     public void SubscribeToViewActions()
     {
         foreach (var view in cannonPartViews)
         {
-            view.OnNextButtonClicked += OnNextButton;
-            view.OnPreviousButtonClicked += OnPreviousButton;
+            view.OnNextButtonClicked += OnNextButtonClicked;
+            view.OnPreviousButtonClicked += OnPreviousButtonClicked;
         }
     }
 
@@ -26,28 +25,28 @@ public class CreateView : BaseView
     {
         foreach (var view in cannonPartViews)
         {
-            view.OnNextButtonClicked -= OnNextButton;
-            view.OnPreviousButtonClicked -= OnPreviousButton;
+            view.OnNextButtonClicked -= OnNextButtonClicked;
+            view.OnPreviousButtonClicked -= OnPreviousButtonClicked;
         }
     }
 
-    private void OnPreviousButton(CannonPartType cannonPartType)
+    private void OnPreviousButtonClicked(CannonPartType cannonPartType)
     {
-        OnPreviousButtonClicked?.Invoke(cannonPartType);
+        OnPreviousButton?.Invoke(cannonPartType);
     }
 
-    private void OnNextButton(CannonPartType cannonPartType)
+    private void OnNextButtonClicked(CannonPartType cannonPartType)
     {
-        OnNextButtonClicked?.Invoke(cannonPartType);
+        OnNextButton?.Invoke(cannonPartType);
     }
 
-    public void OnSaveButton()
+    public void OnSaveButtonClicked()
     {
-        OnSaveButtonClicked?.Invoke();
+        OnSaveButton?.Invoke();
     }
 
-    public void OnMenuButton()
+    public void OnMenuButtonClicked()
     {
-        OnMenuButtonClicked.Invoke();
+        OnMenuButton.Invoke();
     }
 }

@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UIPanels : MonoBehaviour
+public class ApplicationViews : MonoBehaviour
 {
     [SerializeField]
     private MenuView menuView;

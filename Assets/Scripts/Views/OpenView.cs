@@ -5,46 +5,46 @@ using UnityEngine.UI;
 
 public class OpenView : BaseView
 {
-    public Action<int> OnSaveFileChosen;
+    public Action<int> OnSaveChosen;
 
     [SerializeField]
     private GameObject gridItem;
     [SerializeField]
-    private RectTransform content;
+    private RectTransform gridContent;
     [SerializeField]
     private GridLayoutGroup gridLayoutGroup;
 
-    private List<SaveFileButton> saveFileButtons = new List<SaveFileButton>();
+    private List<SavedElementButton> savedElementsButtons = new List<SavedElementButton>();
 
     public void CreateGridButton(int saveId)
     {
-        GameObject saveFileButtonObject = Instantiate(gridItem, content, false);
-        SaveFileButton saveFileButton = saveFileButtonObject.GetComponent<SaveFileButton>();
+        GameObject savedElementButtonObject = Instantiate(gridItem, gridContent, false);
+        SavedElementButton saveFileButton = savedElementButtonObject.GetComponent<SavedElementButton>();
         saveFileButton.ButtonId = saveId;
         Sprite sprite = SaveController.Instance.GetScreenshotImageBySaveId(saveId);
         saveFileButton.SetButtonImage(sprite);
-        saveFileButtons.Add(saveFileButton);
+        savedElementsButtons.Add(saveFileButton);
         gridLayoutGroup.enabled = true;
     }
 
     public void SubscribeButtonActions()
     {
-        foreach (var button in saveFileButtons)
+        foreach (var button in savedElementsButtons)
         {
-            button.OnButtonClicked += FileSaveButtonClicked;
+            button.OnButtonClicked += ChooseSaveToLoad;
         }
     }
 
     public void UnsubscribeButtonActions()
     {
-        foreach (var button in saveFileButtons)
+        foreach (var button in savedElementsButtons)
         {
-            button.OnButtonClicked -= FileSaveButtonClicked;
+            button.OnButtonClicked -= ChooseSaveToLoad;
         }
     }
 
-    private void FileSaveButtonClicked(int buttonId)
+    private void ChooseSaveToLoad(int saveId)
     {
-        OnSaveFileChosen?.Invoke(buttonId);
+        OnSaveChosen?.Invoke(saveId);
     }
 }

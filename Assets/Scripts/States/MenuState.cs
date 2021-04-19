@@ -1,26 +1,28 @@
 public class MenuState : BaseState
 {
+    private MenuView menuView;
     public override void EnterState()
     {
-        stateController.UIPanels.MenuView.OnOpenClicked += OpenClicked;
-        stateController.UIPanels.MenuView.OnCreateClicked += CreateClicked;
+        menuView = stateController.AppViews.MenuView;
+        menuView.OnOpenButton += OpenButtonClicked;
+        menuView.OnCreateButton += CreateButtonClicked;
         SaveController.Instance.LoadFromJSON();
-        stateController.UIPanels.MenuView.DisplayView(true);
+        stateController.AppViews.MenuView.DisplayView(true);
     }
 
     public override void ExitState()
     {
-        stateController.UIPanels.MenuView.OnOpenClicked -= OpenClicked;
-        stateController.UIPanels.MenuView.OnCreateClicked -= CreateClicked;
-        stateController.UIPanels.MenuView.DisplayView(false);
+        menuView.OnOpenButton -= OpenButtonClicked;
+        menuView.OnCreateButton -= CreateButtonClicked;
+        menuView.DisplayView(false);
     }
 
-    private void OpenClicked()
+    private void OpenButtonClicked()
     {
         stateController.TransitionToState(new OpenState());
     }
 
-    private void CreateClicked()
+    private void CreateButtonClicked()
     {
         stateController.TransitionToState(new GenerateState());
     }

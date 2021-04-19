@@ -1,20 +1,17 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class MenuView : BaseView
 {
-    public Action OnCreateClicked;
-    public Action OnOpenClicked;
+    public Action OnCreateButton;
+    public Action OnOpenButton;
 
     public void OnCreateButtonClicked()
     {
-        OnCreateClicked.Invoke();
+        OnCreateButton.Invoke();
     }
 
     public void OnOpenButtonClicked()
     {
-        OnOpenClicked.Invoke();
+        OnOpenButton.Invoke();
     }
 }

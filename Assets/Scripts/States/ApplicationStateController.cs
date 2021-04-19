@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ApplicationStateController : MonoBehaviour
 {
     [SerializeField]
-    private UIPanels uiPanels;
+    private ApplicationViews appViews;
 
     private BaseState currentState;
 
-    public UIPanels UIPanels => uiPanels;
+    public ApplicationViews AppViews => appViews;
 
     private void Start()
     {
