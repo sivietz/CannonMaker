@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2522927486900261268}
   - component: {fileID: 1406448640323983071}
-  m_Layer: 0
-  m_Name: None
+  m_Layer: 3
+  m_Name: EmptyStand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

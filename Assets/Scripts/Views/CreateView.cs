@@ -11,6 +11,7 @@ public class CreateView : BaseView
     public Action<CannonPartType> OnPreviousButtonClicked;
     public Action<CannonPartType> OnNextButtonClicked;
     public Action OnSaveButtonClicked;
+    public Action OnMenuButtonClicked;
 
     public void SubscribeToViewActions()
     {
@@ -43,5 +44,10 @@ public class CreateView : BaseView
     public void OnSaveButton()
     {
         OnSaveButtonClicked?.Invoke();
+    }
+
+    public void OnMenuButton()
+    {
+        OnMenuButtonClicked.Invoke();
     }
 }

@@ -11,6 +11,8 @@ public class CannonController : MonoBehaviour, ISaveable
     private CannonPartController standController;
     [SerializeField]
     private CannonPartController wheelsController;
+    [SerializeField]
+    private MaterialColorsData materialColorsData;
 
     private static CannonController instance;
 
@@ -41,6 +43,7 @@ public class CannonController : MonoBehaviour, ISaveable
         barrelController.SetCannonPart(UnityEngine.Random.Range(0, barrelController.CannonParts.Count));
         standController.SetCannonPart(UnityEngine.Random.Range(0, standController.CannonParts.Count));
         wheelsController.SetCannonPart(UnityEngine.Random.Range(0, standController.CannonParts.Count));
+        materialColorsData.SetDefaultColors();
         AlignCannonParts();
     }
 

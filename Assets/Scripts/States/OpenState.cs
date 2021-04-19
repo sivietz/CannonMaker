@@ -3,7 +3,6 @@ public class OpenState : BaseState
     public override void EnterState()
     {
         stateController.UIPanels.OpenView.OnSaveFileChosen += LoadChosenSaveFile;
-        //SaveController.Instance.LoadFromJSON();
         foreach(var saveFile in SaveController.Instance.SaveDataCollection.saveDataList)
         {
             stateController.UIPanels.OpenView.CreateGridButton(saveFile.id);

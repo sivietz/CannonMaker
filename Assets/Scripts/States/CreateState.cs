@@ -5,6 +5,7 @@ public class CreateState : BaseState
         stateController.UIPanels.CreateView.OnNextButtonClicked += SetNextCannonPart;
         stateController.UIPanels.CreateView.OnPreviousButtonClicked += SetPreviousCannonPart;
         stateController.UIPanels.CreateView.OnSaveButtonClicked += SaveClicked;
+        stateController.UIPanels.CreateView.OnMenuButtonClicked += MenuClicked;
         stateController.UIPanels.CreateView.SubscribeToViewActions();
         stateController.UIPanels.CreateView.DisplayView(true);
     }
@@ -15,6 +16,7 @@ public class CreateState : BaseState
         stateController.UIPanels.CreateView.OnNextButtonClicked -= SetNextCannonPart;
         stateController.UIPanels.CreateView.OnPreviousButtonClicked -= SetPreviousCannonPart;
         stateController.UIPanels.CreateView.OnSaveButtonClicked -= SaveClicked;
+        stateController.UIPanels.CreateView.OnMenuButtonClicked -= MenuClicked;
         stateController.UIPanels.CreateView.UnsubscribeToViewActions();
     }
 
@@ -31,5 +33,11 @@ public class CreateState : BaseState
     private void SaveClicked()
     {
         SaveController.Instance.SaveToJSON();
+        SaveController.Instance.SaveScreenshot();
+    }
+
+    private void MenuClicked()
+    {
+        stateController.TransitionToState(new MenuState());
     }
 }

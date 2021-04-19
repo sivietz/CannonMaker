@@ -22,6 +22,6 @@ public class MenuState : BaseState
 
     private void CreateClicked()
     {
-        stateController.TransitionToState(new CreateState());
+        stateController.TransitionToState(new GenerateState());
     }
 }

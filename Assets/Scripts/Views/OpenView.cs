@@ -21,6 +21,8 @@ public class OpenView : BaseView
         GameObject saveFileButtonObject = Instantiate(gridItem, content, false);
         SaveFileButton saveFileButton = saveFileButtonObject.GetComponent<SaveFileButton>();
         saveFileButton.ButtonId = saveId;
+        Sprite sprite = SaveController.Instance.GetScreenshotImageBySaveId(saveId);
+        saveFileButton.SetButtonImage(sprite);
         saveFileButtons.Add(saveFileButton);
         gridLayoutGroup.enabled = true;
     }

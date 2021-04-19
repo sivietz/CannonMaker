@@ -10,11 +10,14 @@ public class SaveController : MonoBehaviour
 
     private const string JsonFileName = "save.json";
     private const string ScreenshotFolderName = "Screenshots";
+    private const string ResourcesFolderName = "Resources";
 
     [SerializeField]
     private CannonController cannonController;
     [SerializeField]
     private MaterialColorsData materialColors;
+    [SerializeField]
+    private Camera screenshotCamera;
 
     private string jsonPath;
     private string screenshotPath;
@@ -36,10 +39,9 @@ public class SaveController : MonoBehaviour
         }
 
         jsonPath = Path.Combine(Application.persistentDataPath, JsonFileName);
-
-        if (!Directory.Exists(Path.Combine(Application.persistentDataPath, ScreenshotFolderName)))
+        if (!Directory.Exists(Path.Combine(Application.dataPath, ResourcesFolderName)))
         {
-            Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, ScreenshotFolderName));
+            Directory.CreateDirectory(Path.Combine(Application.dataPath, ResourcesFolderName));
         }
     }
 
@@ -54,9 +56,6 @@ public class SaveController : MonoBehaviour
         PrepareDataToSave();
         string json = JsonUtility.ToJson(SaveDataCollection);
         File.WriteAllText(jsonPath, json);
-
-        Debug.Log("save to: " + jsonPath);
-        Debug.Log(json);
     }
 
     public void LoadFromJSON()
@@ -79,25 +78,30 @@ public class SaveController : MonoBehaviour
         materialColors.LoadData(saveToLoad);
     }
 
-    public void SaveScreenshot(RenderTexture renderTexture)
+    public void SaveScreenshot()
     {
-        StartCoroutine(SaveImageAtTheEndOfFrame(renderTexture));
+        StartCoroutine(SaveImageAtTheEndOfFrame());
     }
 
-    private IEnumerator SaveImageAtTheEndOfFrame(RenderTexture renderTexture)
+    public Sprite GetScreenshotImageBySaveId(int saveId)
+    {
+        Sprite sprite = Resources.Load<Sprite>(SaveDataCollection.saveDataList[saveId].screenshotPath) as Sprite;
+        //Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+        return sprite;
+    }
+
+    private IEnumerator SaveImageAtTheEndOfFrame()
     {
         yield return endOfFrame;
 
-        Texture2D texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGBA32, false, false);
-
-        texture.Apply(false);
-        Graphics.CopyTexture(renderTexture, texture);
-
-
-        //texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
-        //texture.ReadPixels(new Rect(new Vector2(renderTexture.pos), 0, 0);
-        texture.Apply();
-        var imageBytes = texture.EncodeToPNG();
+        RenderTexture renderTexture = new RenderTexture(screenshotCamera.pixelWidth, screenshotCamera.pixelHeight, 0);
+        Texture2D screenshot = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGBA32, false, false);
+        screenshotCamera.targetTexture = renderTexture;
+        screenshotCamera.Render();
+        RenderTexture.active = screenshotCamera.targetTexture;
+        screenshot.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+        screenshot.Apply();
+        var imageBytes = screenshot.EncodeToPNG();
         File.WriteAllBytes(screenshotPath, imageBytes);
     }
 
@@ -107,7 +111,7 @@ public class SaveController : MonoBehaviour
         {
             id = SaveDataCollection.saveDataList.Count,
             cannonParts = new List<CannonPart>(),
-            cannonMaterialsColors = new List<Color>(),
+            cannonMaterialsColors = new List<CannonMaterialColor>(),
             screenshotPath = screenshotPath
         };
         cannonController.SaveData(saveData);
@@ -117,7 +121,7 @@ public class SaveController : MonoBehaviour
 
     private string GenerateScreenshotPath()
     {
-        screenshotPath = Path.Combine(Application.persistentDataPath, ScreenshotFolderName, $"{DateTime.Now:yyyy-MM-dd-HHmmss}.png");
+        screenshotPath = Path.Combine(Application.dataPath, ResourcesFolderName, $"{DateTime.Now:yyyy-MM-dd-HHmmss}.png");
         return screenshotPath;
     }
 }

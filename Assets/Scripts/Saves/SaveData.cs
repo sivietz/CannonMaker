@@ -8,6 +8,6 @@ public class SaveData
 {
     public int id;
     public List<CannonPart> cannonParts;
-    public List<Color> cannonMaterialsColors;
+    public List<CannonMaterialColor> cannonMaterialsColors;
     public string screenshotPath;
 }

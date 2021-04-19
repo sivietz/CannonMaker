@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c41303e982c65f94d948e84bf998c2b6, type: 3}
+  m_Name: MaterialColorsData
+  m_EditorClassIdentifier: 
+  cannonMaterials:
+  - materialId: 1
+    defaultColor: {r: 0.67058825, g: 0.56078434, b: 0.34509805, a: 1}
+    material: {fileID: 2100000, guid: 552b83985ae3eb74ab3810f343c76774, type: 2}
+  - materialId: 2
+    defaultColor: {r: 0.08627451, g: 0.078431375, b: 0.054901965, a: 1}
+    material: {fileID: 2100000, guid: 3dcbd0eb63f071e489a935a8ea4fb9a5, type: 2}
+  - materialId: 3
+    defaultColor: {r: 0.9960785, g: 0.38823533, b: 0.03137255, a: 1}
+    material: {fileID: 2100000, guid: 33d67b9bd316714429bdf6e5b468eb62, type: 2}
+  - materialId: 4
+    defaultColor: {r: 0.9058824, g: 0.121568635, b: 0.015686275, a: 1}
+    material: {fileID: 2100000, guid: 5ef846665be33cb48a48e8a87f902e75, type: 2}
+  - materialId: 5
+    defaultColor: {r: 0.85098046, g: 0.5411765, b: 0.09411766, a: 1}
+    material: {fileID: 2100000, guid: 2d9f971465f412145b4b9580bc21cb2e, type: 2}

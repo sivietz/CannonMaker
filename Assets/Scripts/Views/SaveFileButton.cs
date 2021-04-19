@@ -13,14 +13,13 @@ public class SaveFileButton : MonoBehaviour
 
     public int ButtonId { get; set; }
 
-    private void Start()
-    {
-        //buttonImage = 
-            //SaveController.Instance.SaveDataCollection.saveDataList[ButtonId].screenshotPath;
-    }
-
     public void OnButtonClick()
     {
         OnButtonClicked?.Invoke(ButtonId);
+    }
+
+    public void SetButtonImage(Sprite sprite)
+    {
+        buttonImage.sprite = sprite;
     }
 }
