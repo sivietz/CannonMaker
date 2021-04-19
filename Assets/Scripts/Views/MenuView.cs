@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class MenuView : BaseView
 {
@@ -13,5 +14,10 @@ public class MenuView : BaseView
     public void OnOpenButtonClicked()
     {
         OnOpenButton.Invoke();
+    }
+
+    public void OnQuitButtonClicked()
+    {
+        Application.Quit();
     }
 }
