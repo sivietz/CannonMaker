@@ -7,6 +7,8 @@ public class MaterialColorsData : ScriptableObject, ISaveable
     [SerializeField]
     private List<CannonMaterial> cannonMaterials;
 
+    public List<CannonMaterial> CannonMaterials => cannonMaterials;
+
     public void SetDefaultColors()
     {
         foreach (var cannonMaterial in cannonMaterials)

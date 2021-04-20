@@ -8,7 +8,7 @@ public class OpenState : BaseState
         openView.OnBackButton += BackToMenu;
         foreach(var saveFile in SaveController.Instance.SaveDataCollection.saveDataList)
         {
-            openView.CreateGridButton(saveFile.id);
+            openView.SetupGridButton(saveFile.id);
         }
         openView.SubscribeButtonActions();
         openView.DisplayView(true);

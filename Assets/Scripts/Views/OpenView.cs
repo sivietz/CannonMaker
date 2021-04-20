@@ -17,14 +17,20 @@ public class OpenView : BaseView
 
     private List<SavedElementButton> savedElementsButtons = new List<SavedElementButton>();
 
-    public void CreateGridButton(int saveId)
+    public void SetupGridButton(int saveId)
     {
-        GameObject savedElementButtonObject = Instantiate(gridItem, gridContent, false);
-        SavedElementButton saveFileButton = savedElementButtonObject.GetComponent<SavedElementButton>();
-        saveFileButton.ButtonId = saveId;
-        Sprite sprite = SaveController.Instance.GetScreenshotImageBySaveId(saveId);
-        saveFileButton.SetButtonImage(sprite);
-        savedElementsButtons.Add(saveFileButton);
+        if(!savedElementsButtons.Find(x => x.ButtonId == saveId))
+        {
+            GameObject savedElementButtonObject = Instantiate(gridItem, gridContent, false);
+            SavedElementButton saveFileButton = savedElementButtonObject.GetComponent<SavedElementButton>();
+            saveFileButton.ButtonId = saveId;
+            Sprite sprite = SaveController.Instance.GetScreenshotImageBySaveId(saveId);
+            if (sprite != null)
+            {
+                saveFileButton.SetButtonImage(sprite);
+            }
+            savedElementsButtons.Add(saveFileButton);
+        }
         gridLayoutGroup.enabled = true;
     }
 

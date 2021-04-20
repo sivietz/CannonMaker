@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,37 +6,44 @@ using UnityEngine.UI;
 
 public class ColorSetter : MonoBehaviour
 {
-    [SerializeField]
-    private Material material;
-    [SerializeField]
-    private Image colorIndicatorImage;
+    public Action<int, Color> OnColorChanged;
+    public Action OnCloseButton;
+
     [SerializeField]
     private Slider rSlider;
     [SerializeField]
     private Slider gSlider;
     [SerializeField]
     private Slider bSlider;
+    [SerializeField]
+    private Button closeButon;
 
-    private Color defaultMaterialColor;
+    private Color color;
+    private int currentMaterialId;
 
-    private void Start()
+    public void OpenColorSetter(int materialId)
     {
-        defaultMaterialColor = material.color;
-        colorIndicatorImage.color = material.color;
+        this.currentMaterialId = materialId;
     }
 
-    private void OnDestroy()
+    public void SetSliderValues(Color color)
     {
-        material.color = defaultMaterialColor;
+        rSlider.value = color.r;
+        gSlider.value = color.g;
+        bSlider.value = color.b;
     }
 
-    public void ChangeColor()
+    public void OnSliderValueChanged()
     {
-        Color color = material.color;
         color.r = rSlider.value;
         color.g = gSlider.value;
         color.b = bSlider.value;
-        material.color = color;
-        colorIndicatorImage.color = color;
+        color.a = 1;
+        OnColorChanged?.Invoke(currentMaterialId, color);
+    }
+
+    public void OnCloseButtonClicked()
+    {
+        OnCloseButton?.Invoke();
     }
 }

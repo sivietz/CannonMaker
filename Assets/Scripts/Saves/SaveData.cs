@@ -7,5 +7,5 @@ public class SaveData
     public int id;
     public List<CannonPart> cannonParts;
     public List<CannonMaterialColor> cannonMaterialsColors;
-    public string screenshotPath;
+    public string imagePath;
 }

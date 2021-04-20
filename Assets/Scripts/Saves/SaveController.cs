@@ -9,15 +9,14 @@ public class SaveController : MonoBehaviour
     public Action OnJsonDataLoaded;
 
     private const string JsonFileName = "save.json";
-    private const string ResourcesFolderName = "Resources";
-    private const string ScreenshotFileExtension = ".png";
+    private const string ScreenshotFolderName = "Screenshot";
 
     [SerializeField]
     private Camera screenshotCamera;
 
     private string jsonPath;
+    private string screenshotDirectoryPath;
     private string screenshotPath;
-    private string resourcesPath;
     private WaitForEndOfFrame endOfFrame;
     private static SaveController instance;
 
@@ -36,9 +35,10 @@ public class SaveController : MonoBehaviour
         }
 
         jsonPath = Path.Combine(Application.persistentDataPath, JsonFileName);
-        if (!Directory.Exists(Path.Combine(Application.dataPath, ResourcesFolderName)))
+        screenshotDirectoryPath = Path.Combine(Application.persistentDataPath, ScreenshotFolderName);
+        if (!Directory.Exists(screenshotDirectoryPath))
         {
-            Directory.CreateDirectory(Path.Combine(Application.dataPath, ResourcesFolderName));
+            Directory.CreateDirectory(screenshotDirectoryPath);
         }
     }
 
@@ -72,7 +72,7 @@ public class SaveController : MonoBehaviour
     {
         SaveData saveToLoad = SaveDataCollection.saveDataList[id];
         CannonController.Instance.LoadData(saveToLoad);
-        //MaterialColorController.Instance.LoadData(saveToLoad);
+        MaterialColorController.Instance.LoadData(saveToLoad);
     }
 
     public void SaveScreenshot()
@@ -82,7 +82,7 @@ public class SaveController : MonoBehaviour
 
     public Sprite GetScreenshotImageBySaveId(int saveId)
     {
-        Texture2D texture = Resources.Load<Texture2D>(SaveDataCollection.saveDataList[saveId].screenshotPath);
+        Texture2D texture = LoadPNG(SaveDataCollection.saveDataList[saveId].imagePath);
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
         return sprite;
     }
@@ -91,7 +91,7 @@ public class SaveController : MonoBehaviour
     {
         yield return endOfFrame;
 
-        RenderTexture renderTexture = new RenderTexture(screenshotCamera.pixelWidth, screenshotCamera.pixelHeight, 0);
+        RenderTexture renderTexture = screenshotCamera.targetTexture;
         Texture2D screenshot = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGBA32, false, false);
         screenshotCamera.targetTexture = renderTexture;
         screenshotCamera.Render();
@@ -109,17 +109,30 @@ public class SaveController : MonoBehaviour
             id = SaveDataCollection.saveDataList.Count,
             cannonParts = new List<CannonPart>(),
             cannonMaterialsColors = new List<CannonMaterialColor>(),
-            screenshotPath = resourcesPath
+            imagePath = screenshotPath
         };
         CannonController.Instance.SaveData(saveData);
-        //MaterialColorController.Instance.SaveData(saveData);
+        MaterialColorController.Instance.SaveData(saveData);
         SaveDataCollection.saveDataList.Add(saveData);
+    }
+
+    private Texture2D LoadPNG(string path)
+    {
+        Texture2D texture = null;
+        byte[] fileData;
+
+        if (File.Exists(path))
+        {
+            fileData = File.ReadAllBytes(path);
+            texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+            texture.LoadImage(fileData);
+        }
+        return texture;
     }
 
     private void GenerateScreenshotPath()
     {
-        string fileName = $"{DateTime.Now:yyyy-MM-dd-HHmmss}";
-        screenshotPath = Path.Combine(Application.dataPath, ResourcesFolderName, $"{fileName}{ScreenshotFileExtension}");
-        resourcesPath = fileName;
+        string fileName = $"{DateTime.Now:yyyy-MM-dd-HHmmss}.png";
+        screenshotPath = Path.Combine(Application.persistentDataPath, ScreenshotFolderName, fileName);
     }
 }

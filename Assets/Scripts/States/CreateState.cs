@@ -3,6 +3,7 @@ public class CreateState : BaseState
     private CreateView createView;
     public override void EnterState()
     {
+        MaterialColorController.Instance.SetUp();
         createView = stateController.AppViews.CreateView;
         createView.OnNextButton += SetNextCannonPart;
         createView.OnPreviousButton += SetPreviousCannonPart;
