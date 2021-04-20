@@ -47,6 +47,6 @@ public class CreateView : BaseView
 
     public void OnMenuButtonClicked()
     {
-        OnMenuButton.Invoke();
+        OnMenuButton?.Invoke();
     }
 }

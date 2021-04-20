@@ -11,23 +11,8 @@ public class CannonPartController : MonoBehaviour, ISaveable
     private Transform currentPartTransform;
     private int currentPartId;
 
-    public List<GameObject> CannonParts => cannonParts;
     public CannonPartType CannonPartType => cannonPartType;
-    public int CurrentPartId => currentPartId;
-
-    public Transform CurrentPartTransform
-    {
-        get
-        {
-            return currentPartTransform;
-        }
-        set
-        {
-            currentPartTransform = value;
-            cannonParts[currentPartId].transform.position = value.position;
-            cannonParts[currentPartId].transform.rotation = value.rotation;
-        }
-    }
+    public Transform CurrentPartTransform => currentPartTransform;
 
     public void SetNextCannonPart()
     {
@@ -66,15 +51,27 @@ public class CannonPartController : MonoBehaviour, ISaveable
         currentPartId = id;
     }
 
+    public void SetRandomCannonPart()
+    {
+        SetCannonPart(Random.Range(0, cannonParts.Count));
+    }
+
     public void LoadData(SaveData save)
     {
+        bool isPartAssigned = false;
         foreach (var part in save.cannonParts)
         {
             if (part.CannonPartType == CannonPartType)
             {
                 SetCannonPart(part.CannonPartId);
+                isPartAssigned = true;
                 break;
             }
+        }
+
+        if (!isPartAssigned)
+        {
+            SetRandomCannonPart();
         }
     }
 

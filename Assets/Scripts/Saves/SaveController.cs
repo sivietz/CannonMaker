@@ -9,18 +9,15 @@ public class SaveController : MonoBehaviour
     public Action OnJsonDataLoaded;
 
     private const string JsonFileName = "save.json";
-    private const string ScreenshotFolderName = "Screenshots";
     private const string ResourcesFolderName = "Resources";
+    private const string ScreenshotFileExtension = ".png";
 
-    [SerializeField]
-    private CannonController cannonController;
-    [SerializeField]
-    private MaterialColorsData materialColors;
     [SerializeField]
     private Camera screenshotCamera;
 
     private string jsonPath;
     private string screenshotPath;
+    private string resourcesPath;
     private WaitForEndOfFrame endOfFrame;
     private static SaveController instance;
 
@@ -74,8 +71,8 @@ public class SaveController : MonoBehaviour
     public void LoadSingleSaveData(int id)
     {
         SaveData saveToLoad = SaveDataCollection.saveDataList[id];
-        cannonController.LoadData(saveToLoad);
-        materialColors.LoadData(saveToLoad);
+        CannonController.Instance.LoadData(saveToLoad);
+        //MaterialColorController.Instance.LoadData(saveToLoad);
     }
 
     public void SaveScreenshot()
@@ -85,8 +82,8 @@ public class SaveController : MonoBehaviour
 
     public Sprite GetScreenshotImageBySaveId(int saveId)
     {
-        Sprite sprite = Resources.Load<Sprite>(SaveDataCollection.saveDataList[saveId].screenshotPath) as Sprite;
-        //Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+        Texture2D texture = Resources.Load<Texture2D>(SaveDataCollection.saveDataList[saveId].screenshotPath);
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
         return sprite;
     }
 
@@ -112,16 +109,17 @@ public class SaveController : MonoBehaviour
             id = SaveDataCollection.saveDataList.Count,
             cannonParts = new List<CannonPart>(),
             cannonMaterialsColors = new List<CannonMaterialColor>(),
-            screenshotPath = screenshotPath
+            screenshotPath = resourcesPath
         };
-        cannonController.SaveData(saveData);
-        materialColors.SaveData(saveData);
+        CannonController.Instance.SaveData(saveData);
+        //MaterialColorController.Instance.SaveData(saveData);
         SaveDataCollection.saveDataList.Add(saveData);
     }
 
-    private string GenerateScreenshotPath()
+    private void GenerateScreenshotPath()
     {
-        screenshotPath = Path.Combine(Application.dataPath, ResourcesFolderName, $"{DateTime.Now:yyyy-MM-dd-HHmmss}.png");
-        return screenshotPath;
+        string fileName = $"{DateTime.Now:yyyy-MM-dd-HHmmss}";
+        screenshotPath = Path.Combine(Application.dataPath, ResourcesFolderName, $"{fileName}{ScreenshotFileExtension}");
+        resourcesPath = fileName;
     }
 }

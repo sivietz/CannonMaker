@@ -8,12 +8,12 @@ public class MenuView : BaseView
 
     public void OnCreateButtonClicked()
     {
-        OnCreateButton.Invoke();
+        OnCreateButton?.Invoke();
     }
 
     public void OnOpenButtonClicked()
     {
-        OnOpenButton.Invoke();
+        OnOpenButton?.Invoke();
     }
 
     public void OnQuitButtonClicked()

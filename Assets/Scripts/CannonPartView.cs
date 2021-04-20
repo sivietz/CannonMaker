@@ -11,11 +11,11 @@ public class CannonPartView : MonoBehaviour
 
     public void OnNextButton()
     {
-        OnNextButtonClicked.Invoke(cannonPartType);
+        OnNextButtonClicked?.Invoke(cannonPartType);
     }
 
     public void OnPreviousButton()
     {
-        OnPreviousButtonClicked.Invoke(cannonPartType);
+        OnPreviousButtonClicked?.Invoke(cannonPartType);
     }
 }

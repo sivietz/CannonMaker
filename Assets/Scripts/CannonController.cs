@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CannonController : MonoBehaviour, ISaveable
@@ -11,8 +8,6 @@ public class CannonController : MonoBehaviour, ISaveable
     private CannonPartController standController;
     [SerializeField]
     private CannonPartController wheelsController;
-    [SerializeField]
-    private MaterialColorsData materialColorsData;
 
     private static CannonController instance;
 
@@ -40,10 +35,9 @@ public class CannonController : MonoBehaviour, ISaveable
 
     public void GenerateRandomCannon()
     {
-        barrelController.SetCannonPart(UnityEngine.Random.Range(0, barrelController.CannonParts.Count));
-        standController.SetCannonPart(UnityEngine.Random.Range(0, standController.CannonParts.Count));
-        wheelsController.SetCannonPart(UnityEngine.Random.Range(0, standController.CannonParts.Count));
-        materialColorsData.SetDefaultColors();
+        barrelController.SetRandomCannonPart();
+        standController.SetRandomCannonPart();
+        wheelsController.SetRandomCannonPart();
         AlignCannonParts();
     }
 
@@ -87,10 +81,10 @@ public class CannonController : MonoBehaviour, ISaveable
                 barrelController.SetPreviousCannonPart();
                 break;
             case CannonPartType.Stand:
-                standController.SetNextCannonPart();
+                standController.SetPreviousCannonPart();
                 break;
             case CannonPartType.Wheels:
-                wheelsController.SetNextCannonPart();
+                wheelsController.SetPreviousCannonPart();
                 break;
         }
         AlignCannonParts();
