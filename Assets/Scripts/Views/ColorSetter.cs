@@ -15,6 +15,8 @@ public class ColorSetter : MonoBehaviour
     private Slider bSlider;
     [SerializeField]
     private Button closeButon;
+    [SerializeField]
+    private Image colorIndicator;
 
     private Color color;
     private int currentMaterialId;
@@ -29,6 +31,7 @@ public class ColorSetter : MonoBehaviour
         rSlider.value = color.r;
         gSlider.value = color.g;
         bSlider.value = color.b;
+        colorIndicator.color = color;
     }
 
     public void OnSliderValueChanged()
@@ -37,6 +40,7 @@ public class ColorSetter : MonoBehaviour
         color.g = gSlider.value;
         color.b = bSlider.value;
         color.a = 1;
+        colorIndicator.color = color;
         OnColorChanged?.Invoke(currentMaterialId, color);
     }
 
