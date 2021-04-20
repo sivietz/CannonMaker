@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -60,6 +59,5 @@ public class ColorPaletteView : MonoBehaviour
                 colorSetter.OnColorChanged -= button.SetButtonImageColor;
             }
         }
-        //colorSetter.OnCloseButton -= HideColorSetter;
     }
 }

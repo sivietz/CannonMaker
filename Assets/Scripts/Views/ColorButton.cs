@@ -8,16 +8,11 @@ public class ColorButton : MonoBehaviour
 
     [SerializeField]
     private Image buttonImage;
-    //[SerializeField]
-    //private ColorSetter colorSetter;
 
     public int materialId;
 
     public void OnColorButtonClicked()
     {
-        //colorSetter.gameObject.SetActive(true);
-        //colorSetter.OnColorChanged += SetButtonImageColor;
-        //colorSetter.OnCloseButton += HideColorSetter;
         OnColorButton?.Invoke(materialId);
     }
 
@@ -27,14 +22,5 @@ public class ColorButton : MonoBehaviour
         {
             buttonImage.color = color;
         }
-    }
-
-
-
-    private void HideColorSetter()
-    {
-        //colorSetter.gameObject.SetActive(false);
-        //colorSetter.OnColorChanged -= SetButtonImageColor;
-        //colorSetter.OnCloseButton -= HideColorSetter;
     }
 }

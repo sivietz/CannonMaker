@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MaterialColorController : MonoBehaviour, ISaveable
@@ -29,6 +27,12 @@ public class MaterialColorController : MonoBehaviour, ISaveable
         }
     }
 
+    public void SetUp()
+    {
+        PrepareColorPaletteView();
+        colorPaletteView.SubscribeToButtonActions();
+    }
+
     public void PrepareColorPaletteView()
     {
         if (colorPaletteView.ColorButtons.Count == materialColorsData.CannonMaterials.Count)
@@ -44,15 +48,6 @@ public class MaterialColorController : MonoBehaviour, ISaveable
         {
             Debug.LogError("The amount of color buttons does not correspond to the amount of materials.", this);
         }
-    }
-
-    public void CleanUpColorPaletteView()
-    {
-        for (int i = 0; i < colorPaletteView.ColorButtons.Count; i++)
-        {
-            colorPaletteView.OnColorSetterOpened -= SetCurrentlyUpdatedMaterial;
-        }
-        colorPaletteView.ColorSetter.OnColorChanged -= UpdateMaterialColor;
     }
 
     private void SetCurrentlyUpdatedMaterial(int materialId)
@@ -75,10 +70,14 @@ public class MaterialColorController : MonoBehaviour, ISaveable
         return null;
     }
 
-    public void SetUp()
+    public void UnsubscribeEvents()
     {
-        PrepareColorPaletteView();
-        colorPaletteView.SubscribeToButtonActions();
+        for (int i = 0; i < colorPaletteView.ColorButtons.Count; i++)
+        {
+            colorPaletteView.OnColorSetterOpened -= SetCurrentlyUpdatedMaterial;
+        }
+        colorPaletteView.ColorSetter.OnColorChanged -= UpdateMaterialColor;
+        colorPaletteView.UnsubscribeToButtonActions();
     }
 
     private void UpdateMaterialColor(int materialId, Color color)

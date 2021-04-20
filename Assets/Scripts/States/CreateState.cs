@@ -15,6 +15,7 @@ public class CreateState : BaseState
 
     public override void ExitState()
     {
+        MaterialColorController.Instance.UnsubscribeEvents();
         createView.DisplayView(false);
         createView.OnNextButton -= SetNextCannonPart;
         createView.OnPreviousButton -= SetPreviousCannonPart;
