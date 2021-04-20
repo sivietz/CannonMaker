@@ -201,7 +201,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7776118603190930137}
-  - component: {fileID: 1890090622240330339}
   m_Layer: 3
   m_Name: Barrel_2
   m_TagString: Untagged
@@ -226,22 +225,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1890090622240330339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3384654613602724125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdd7b1e7afded1e4282f31c5b8b80e91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  materials:
-  - {fileID: 2100006, guid: 54a76ca8ecf5340dc890409523eba101, type: 3}
-  - {fileID: 2100004, guid: 54a76ca8ecf5340dc890409523eba101, type: 3}
-  - {fileID: 2100002, guid: 54a76ca8ecf5340dc890409523eba101, type: 3}
 --- !u!1 &7582087926738916727
 GameObject:
   m_ObjectHideFlags: 0
