@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class OpenView : BaseView
 {
     public Action<int> OnSaveChosen;
+    public Action OnBackButton;
 
     [SerializeField]
     private GameObject gridItem;
@@ -46,5 +47,10 @@ public class OpenView : BaseView
     private void ChooseSaveToLoad(int saveId)
     {
         OnSaveChosen?.Invoke(saveId);
+    }
+
+    public void OnBackButtonClicked()
+    {
+        OnBackButton?.Invoke();
     }
 }

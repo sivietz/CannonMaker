@@ -5,6 +5,7 @@ public class OpenState : BaseState
     {
         openView = stateController.AppViews.OpenView;
         openView.OnSaveChosen += LoadChosenSaveFile;
+        openView.OnBackButton += BackToMenu;
         foreach(var saveFile in SaveController.Instance.SaveDataCollection.saveDataList)
         {
             openView.CreateGridButton(saveFile.id);
@@ -23,5 +24,10 @@ public class OpenState : BaseState
     private void LoadChosenSaveFile(int saveId)
     {
         stateController.TransitionToState(new LoadState(saveId));
+    }
+
+    private void BackToMenu()
+    {
+        stateController.TransitionToState(new MenuState());
     }
 }
